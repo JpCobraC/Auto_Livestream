@@ -14,7 +14,7 @@ logging.basicConfig(
 )
 
 def abre_programa(nome_programa, caminho_programa):
-    if any(nome_programa.lower() in p.info[nome_programa].lower() for p in psutil.process_iter([nome_programa])):
+    if any(nome_programa.lower() in p.info['name'].lower() for p in psutil.process_iter(['name'])):
         logging.info(f"Func: abre_programa | {nome_programa} já está em execução.")
     else:
         try:
@@ -24,8 +24,8 @@ def abre_programa(nome_programa, caminho_programa):
             logging.error(f"Func: abre_programa | Erro ao tentar iniciar {nome_programa}: {e}")
 
 def abre_janela(nome_programa):
-    for p in psutil.process_iter([nome_programa]):
-        if nome_programa.lower() in p.info[nome_programa].lower():
+    for p in psutil.process_iter(['name']):
+        if nome_programa.lower() in p.info['name'].lower():
             janelas = gw.getWindowsWithTitle(nome_programa)
             if janelas:
                 janela = janelas[0]
@@ -48,6 +48,8 @@ def preparar_inicio():
     time.sleep(1)
 
     # Coloca cópia do telão no programa 
+    pyautogui.click()
+    time.sleep()
 
 def inicia_live():
     pyautogui.click()
@@ -59,25 +61,25 @@ def cam1_programa():
 
 # Abrir programas necessários:
 programas = {
-    'obs64': 'C:\Program Files\obs-studio\bin\64bit\obs64.exe',
-    'firefox': 'C:\Program Files\Mozilla Firefox\firefox.exe'
+    'obs64': r'C:/Program Files/obs-studio/bin/64bit/obs64.exe',
+    'firefox': r'C:/Program Files/Mozilla Firefox/firefox.exe'
 }
 
-for nome,caminho in programas.itens():
+for nome,caminho in programas.items():
     abre_programa(nome, caminho)
 
 # Agendamento:
-schedule.every().tuesday.at("19:23").do(preparar_inicio())
-schedule.every().tuesday.at("19:25").do(inicia_live())
-schedule.every().tuesday.at("19:30").do(cam1_programa())
+schedule.every().tuesday.at("19:23").do(preparar_inicio)
+schedule.every().tuesday.at("19:25").do(inicia_live)
+schedule.every().tuesday.at("19:30").do(cam1_programa)
 
-schedule.every().saturday.at("19:23").do(preparar_inicio())
-schedule.every().saturday.at("19:25").do(inicia_live())
-schedule.every().saturday.at("19:30").do(cam1_programa())
+schedule.every().saturday.at("19:23").do(preparar_inicio)
+schedule.every().saturday.at("19:25").do(inicia_live)
+schedule.every().saturday.at("19:30").do(cam1_programa)
 
-schedule.every().sunday.at("18:53").do(preparar_inicio())
-schedule.every().sunday.at("18:55").do(inicia_live())
-schedule.every().sunday.at("19:00").do(cam1_programa())
+schedule.every().sunday.at("18:53").do(preparar_inicio)
+schedule.every().sunday.at("18:55").do(inicia_live)
+schedule.every().sunday.at("19:00").do(cam1_programa)
 
 while True:
     schedule.run_pending()
