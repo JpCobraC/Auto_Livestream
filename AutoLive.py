@@ -15,7 +15,7 @@ logging.basicConfig(
 
 def abre_programa(nome_programa, caminho_programa):
     if any(nome_programa.lower() in p.info['name'].lower() for p in psutil.process_iter(['name'])):
-        logging.info(f"{nome_programa} já está em execução.")
+        logging.info(f"Func: abre_programa | {nome_programa} já está em execução.")
     else:
         try:
             os.startfile(caminho_programa)
