@@ -1,3 +1,3 @@
-Projeto para automatizar a transmissão ao vivo de uma igreja evangélica.
+Projeto para automatizar transmissões ao vivo pré-programadas através do OBS(Open Broadcaster Studio)
 
 Ainda em desenvolvimento
